@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Job Listings</title>
+    <link rel="stylesheet" href="../stylesheets/style.css">
+
+     <% if (typeof currentUser !== "undefined") { %>
+  <a href="/profile">My Profile</a>
+<% } %>
+
+</head>
+<body>
+  <h1>Job Listings</h1>
+
+  <% if (typeof currentUser !== "undefined" && currentUser.role === "admin") { %>
+    <a href="/jobs/new">Post a Job</a>
+  <% } %>
+
+  <ul>
+    <% jobs.forEach(job => { %>
+      <li>
+        <strong><%= job.title %></strong> at <%= job.company %>
+
+        <% if (typeof currentUser !== "undefined") { %>
+          <% if (currentUser.role === "admin") { %>
+            <form action="/jobs/<%= job._id %>?_method=DELETE" method="POST" style="display:inline;">
+              <button type="submit" class="delete" onclick="return confirm('Are you sure you want to delete this job?')">Delete</button>
+            </form>
+          <% } else if (currentUser.role === "user") { %>
+            <form action="/jobs/<%= job._id %>/apply" method="POST" style="display:inline;">
+              <button type="submit">Apply Now</button>
+            </form>
+          <% } %>
+        <% } %>
+
+      </li>
+    <% }) %>
+  </ul>
+</body>
+</html>

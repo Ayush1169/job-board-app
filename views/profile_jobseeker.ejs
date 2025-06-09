@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>My Profile - Jobseeker</title>
+  <link rel="stylesheet" href="../stylesheets/style.css">
+</head>
+<body>
+  <h1>Welcome, <%= User.name %></h1>
+
+  <h2>Your Applied Jobs:</h2>
+  <ul>
+    <% if (User.appliedJobs && User.appliedJobs.length > 0) { %>
+      <% User.appliedJobs.forEach(job => { %>
+        <li>
+          <strong><%= job.title %></strong> at <%= job.company %> in <%= job.location %>
+        </li>
+      <% }) %>
+    <% } else { %>
+      <li>You have not applied to any jobs yet.</li>
+    <% } %>
+  </ul>
+
+  <h2>Your Chats:</h2>
+  <ul>
+    <% if (chats && chats.length > 0) { %>
+      <% chats.forEach(chat => { %>
+        <li>
+          <a href="/chat/<%= chat._id %>">
+            Chat about 
+            <%= chat.jobId && chat.jobId.title ? chat.jobId.title : "a job" %>
+            with 
+            <% 
+              const other = chat.participants.find(p => p._id.toString() !== User._id.toString());
+            %>
+            <%= other ? other.name : "Unknown" %>
+          </a>
+        </li>
+      <% }) %>
+    <% } else { %>
+      <li>No chats yet.</li>
+    <% } %>
+  </ul>
+
+  <a href="/">Back to Home</a>
+</body>
+</html>

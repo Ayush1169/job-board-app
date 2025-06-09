@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>My Profile - Admin</title>
+  <link rel="stylesheet" href="../stylesheets/style.css">
+</head>
+<body>
+  <h1>Welcome, <%= User.name %></h1>
+  <h2>Your Posted Jobs and Applicants:</h2>
+  <% jobs.forEach(job => { %>
+    <div style="border:1px solid #ccc; margin-bottom:20px; padding:10px;">
+      <h3><%= job.title %></h3>
+      <form action="/jobs/<%= job._id %>?_method=DELETE" method="POST" style="display:inline;">
+        <button type="submit" onclick="return confirm('Are you sure you want to delete this job?')">Delete</button>
+      </form>
+      <p><strong>Applicants:</strong></p>
+      <ul>
+        <% job.applicants.forEach(applicant => { %>
+          <li>
+            <%= applicant.name %> - <%= applicant.email %>
+            <!-- Message button to start or open chat -->
+            <form action="/chat/start/<%= applicant._id %>/<%= job._id %>" method="GET" style="display:inline;">
+              <button type="submit">Message</button>
+            </form>
+          </li>
+        <% }) %>
+        <% if (job.applicants.length === 0) { %>
+          <li>No applicants yet.</li>
+        <% } %>
+      </ul>
+    </div>
+  <% }) %>
+  <a href="/">Back to Home</a>
+</body>
+</html>
