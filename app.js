@@ -48,16 +48,12 @@ app.use((err, req, res, next) => {
 
 const mongoose = require('mongoose');
 
-mongoose.connect('mongodb://127.0.0.1:27017/jobboard', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-})
+mongoose.connect(process.env.MONGODB_URI || 'mongodb+srv://2305774:Ayush%40123@cluster0.wyxi5cj.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0')
 .then(() => console.log('MongoDB connected'))
 .catch((err) => console.error('MongoDB connection error:', err));
-
-const PORT = process.env.PORT
+const PORT = process.env.PORT || 6000
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
-``
+
 module.exports = app
