@@ -23,7 +23,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(session ({
-  secret: "heyyyyy",
+  secret:  process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: true
 }))
@@ -48,12 +48,18 @@ app.use((err, req, res, next) => {
 
 const mongoose = require('mongoose');
 
-mongoose.connect(process.env.MONGODB_URI || 'mongodb+srv://2305774:Ayush%40123@cluster0.wyxi5cj.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0')
-.then(() => console.log('MongoDB connected'))
+
+mongoose.connect(process.env.MONGODB_URI)
+.then(() => {
+  console.log('MongoDB connected');
+  const PORT = process.env.PORT || 6000;
+  app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+  });
+})
 .catch((err) => console.error('MongoDB connection error:', err));
-const PORT = process.env.PORT || 6000
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
+
+
+require("dotenv").config()
 
 module.exports = app
