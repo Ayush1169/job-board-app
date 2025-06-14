@@ -53,7 +53,7 @@ const mongoose = require('mongoose');
 mongoose.connect(process.env.MONGODB_URI)
 .then(() => {
   console.log('MongoDB connected');
-  const PORT = process.env.PORT || 6000;
+  const PORT = process.env.PORT ;
   app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
   });
