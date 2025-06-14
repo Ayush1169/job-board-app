@@ -55,7 +55,7 @@ mongoose.connect('mongodb://127.0.0.1:27017/jobboard', {
 .then(() => console.log('MongoDB connected'))
 .catch((err) => console.error('MongoDB connection error:', err));
 
-const PORT = process.env.PORT || 6008
+const PORT = process.env.PORT
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
