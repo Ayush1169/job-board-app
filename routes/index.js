@@ -5,6 +5,7 @@ const User = require("./users");
 const bcrypt = require("bcrypt");
 const Chat = require("./chat")
 
+
 router.get("/", async (req, res) => {
   try {
     const jobs = await Job.find().sort({ postedAt: -1 });

@@ -1,25 +1,40 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Chat</title>
+  <title>Chat Room</title>
+  <link rel="stylesheet" href="/stylesheets/chat.css">
 </head>
 <body>
-  <h1>Chat Room</h1>
-  <div>
-    <ul>
+  <div class="chat-container">
+    <div class="chat-header">
+      <h2>Chat with 
+        <% 
+          const other = chat.participants.find(p => p._id.toString() !== currentUser._id.toString());
+        %>
+        <%= other ? other.name : "Unknown" %>
+      </h2>
+    </div>
+
+    <div class="chat-box" id="chatBox">
       <% chat.messages.forEach(msg => { %>
-        <li>
-          <strong>
-            <%= msg.sender._id.toString() === currentUser._id.toString() ? "You" : msg.sender.name %>
-          </strong>: <%= msg.text %>
-        </li>
+        <div class="message <%= msg.sender._id.toString() === currentUser._id.toString() ? 'sent' : 'received' %>">
+          <p><%= msg.text %></p>
+        </div>
       <% }) %>
-    </ul>
+    </div>
+
+    <form class="chat-form" action="/chat/<%= chat._id %>/reply" method="POST">
+      <input type="text" name="message" required placeholder="Type your message..." autocomplete="off">
+      <button type="submit">Send</button>
+    </form>
+
+    <a class="back-link" href="/profile">← Back to Profile</a>
   </div>
-  <form action="/chat/<%= chat._id %>/reply" method="POST">
-    <input type="text" name="message" required placeholder="Type your message...">
-    <button type="submit">Send</button>
-  </form>
-  <a href="/profile">Back to Profile</a>
+
+  <script>
+    // Scroll chat to bottom on load
+    const chatBox = document.getElementById("chatBox");
+    chatBox.scrollTop = chatBox.scrollHeight;
+  </script>
 </body>
 </html>

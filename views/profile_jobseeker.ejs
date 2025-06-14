@@ -25,8 +25,8 @@
     <% if (chats && chats.length > 0) { %>
       <% chats.forEach(chat => { %>
         <li>
-          <a href="/chat/<%= chat._id %>">
-            Chat about 
+          Chat about 
+      <a href="/chat/<%= chat._id %>">     
             <%= chat.jobId && chat.jobId.title ? chat.jobId.title : "a job" %>
             with 
             <% 
