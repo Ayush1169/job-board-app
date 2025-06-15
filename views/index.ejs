@@ -16,7 +16,11 @@
         <% if (currentUser.role === "admin") { %>
         <li><a href="/jobs/new">Post a Job</a></li>
             <% } %>
-      <% } %>
+      <% } else { %>
+         <li><a href="/login">Login</a></li>
+    <li><a href="/register">Register</a></li>
+  <% } %>
+</ul>
     </ul>
   </nav>
 
